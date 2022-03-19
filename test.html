@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="script.js"></script> -->
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="x"></p>
+    <canvas height="500" width="400" id="scene"></canvas>
+    <script type="text/javascript">
+      let canvas = document.getElementById("scene");
+      let ctx = canvas.getContext("2d");
+      let x;
+      let y;
+      let timer = 0;
+      let velocity = 50;
+      const gravity = 10;
+      const angle = 60;
+      const radius = 4;
+      ctx.fillStyle = "green";
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        y = Math.abs(
+          velocity * Math.sin(angle) - 0.5 * gravity * Math.pow(timer, 2)
+        );
+        x = Math.abs(velocity * timer * Math.cos(angle));
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false); //drawing circle at that point
+        ctx.closePath();
+        ctx.fill();
+        console.log(x, y);
+        timer += 0.2;
+        
+      }
+      setInterval(draw, 100);
+    </script>
+  </body>
+</html>
