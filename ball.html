@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="script.js"></script> -->
+    <title>Document</title>
+  </head>
+  <body>
+    <p id="x"></p>
+    <canvas id="canvas"></canvas>
+    <script>
+      function graph(x, y) {
+        timer = 0;
+        let velocity;
+        const gravity = 10;
+        let angle = 60;
+        velocity = (x / Math.cos(angle)) * timer;
+        y = velocity * timer * Math.sin(angle) - 0.5 * gravity * timer ** 2;
+        let motion = document.getElementById("x");
+        console.log(velocity);
+        motion.append(x, y);
+      }
+      //   graph(2008, 2800);
+      //   setInterval(graph, 50);
+
+    </script>
+  </body>
+</html>

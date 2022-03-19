@@ -1,0 +1,164 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Javascript gravity</title>
+  </head>
+  <body onload="init()">
+    <script>
+      var canvas, ctx, container;
+      canvas = document.createElement("canvas");
+      ctx = canvas.getContext("2d");
+      var ball;
+      var message = "gravity simulator";
+
+      // Velocity x
+      var vx = 5.0;
+      // Velocity y - randomly set
+      var vy;
+
+      var gravity = 0.5;
+      var bounce = 0.7;
+      var xFriction = 0.1;
+
+      function init() {
+        setupCanvas();
+        vy = 10; // vy = (Math.random() * -15) + -5;
+        ball = {
+          x: canvas.width / 2,
+          y: 100,
+          radius: 20,
+          status: 0,
+          color: "green",
+        };
+      } //end init method
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //display some text
+        ctx.fillStyle = "blue";
+        ctx.font = "20px Arial";
+        ctx.fillText(message, 20, 20);
+
+        //draw cirlce
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2, false);
+        ctx.fillStyle = ball.color;
+        ctx.fill();
+        ctx.closePath();
+        ballMovement();
+      }
+
+      setInterval(draw, 1000 / 35);
+
+      function ballMovement() {
+        ball.x += vx;
+        ball.y += vy;
+        vy += gravity;
+        //If either wall is hit, change direction on x axis
+        if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+          vx *= -1;
+        }
+        // Ball hits the floor
+        if (ball.y + ball.radius > canvas.height) {
+          // ||
+          // Re-positioning on the base
+          ball.y = canvas.height - ball.radius;
+          //bounce the ball
+          vy *= -bounce;
+          //do this otherwise, ball never stops bouncing
+          if (vy < 0 && vy > -2.1) vy = 0;
+          //do this otherwise ball never stops on xaxis
+          if (Math.abs(vx) < 1.1) vx = 0;
+          xF();
+        }
+      }
+
+      function xF() {
+        if (vx > 0) vx = vx - xFriction;
+        if (vx < 0) vx = vx + xFriction;
+      }
+
+      function setupCanvas() {
+        //setup canvas
+
+        container = document.createElement("div");
+        container.className = "container";
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(container);
+        container.appendChild(canvas);
+
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 2;
+      }
+
+      /*
+<script>
+      function graph(x, y) {
+        timer = 0;
+        timer += 1;
+        let velocity;
+        const gravity = 10;
+        let angle = 60;
+        velocity = (x / Math.cos(angle)) * timer;
+        y = velocity * timer * Math.sin(angle) - 0.5 * gravity * timer ** 2;
+        let motion = document.getElementById("x");
+        console.log(velocity);
+        motion.append(x, y);
+      }
+        // graph(200, 280);
+        // setInterval(graph, 50)
+      var myCanvas = document.getElementById("myCanvas");
+      myCanvas.width = 300;
+      myCanvas.height = 300;
+      var context = myCanvas.getContext("2d");
+      var GRAPH_TOP = 25;
+      var GRAPH_BOTTOM = 375;
+      var GRAPH_LEFT = 25;
+      var GRAPH_RIGHT = 475;
+
+      var GRAPH_HEIGHT = 350;
+      var GRAPH_WIDTH = 450;
+      context.beginPath();
+      context.moveTo(GRAPH_LEFT, GRAPH_BOTTOM);
+      context.lineTo(GRAPH_RIGHT, GRAPH_BOTTOM);
+      context.lineTo(GRAPH_RIGHT, GRAPH_TOP);
+      context.stroke();
+      context.beginPath();
+      // set light grey color for reference lines
+      context.strokeStyle = "#BBB";
+      context.moveTo(GRAPH_LEFT, GRAPH_TOP);
+      context.lineTo(GRAPH_RIGHT, GRAPH_TOP);
+      context.stroke();
+
+
+      second
+
+      let canvas = document.getElementById("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth - 15;
+      canvas.height = window.innerHeight - 15;
+      cWidth = canvas.width;
+      cHeight = canvas.height;
+      let g = 0.4;
+      let groundPoint = cHeight - cHeight / 4;
+      function drawScene() {
+        let ground = groundPoint + 15;
+        // sky
+        ctx.fillStyle = "rgba(0,0,200,0.2)";
+        ctx.fillRect = (0, 0, cWidth, ground);
+        // ground
+        ctx.beginPath();
+        ctx.moveTo(0, ground);
+        ctx.lineTo(cWidth, ground);
+        ctx.strokeStyle = "rgba(0,100,3,0.6";
+        ctx.stroke();
+        ctx.fillStyle = "rgba(0, 100, 50, 0.6";
+        ctx.fillRect(0, ground, cWidth, cHeight);
+      }
+    
+*/
+    </script>
+  </body>
+</html>
