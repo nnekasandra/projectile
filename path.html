@@ -9,7 +9,7 @@
   </head>
   <body>
     <p id="x"></p>
-    <canvas height="500" width="600" id="scene"></canvas>
+    <canvas height="300" width="500" id="scene"></canvas>
     <script type="text/javascript">
       let canvas = document.getElementById("scene");
       let ctx = canvas.getContext("2d");
@@ -18,23 +18,26 @@
       let timer = 0;
       let velocity = 50;
       const gravity = 10;
-      const angle = 60;
+      const restitution = 0.5;
+      const degsToRads = (deg) => (deg * Math.PI) / 180.0;
+      const angle = degsToRads(70);
       const radius = 4;
       ctx.fillStyle = "green";
-
+      ctx.font = "10px serif";
       function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
         y = Math.abs(
           velocity * Math.sin(angle) - 0.5 * gravity * Math.pow(timer, 2)
         );
         x = Math.abs(velocity * timer * Math.cos(angle));
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, false); //drawing circle at that point
-        ctx.closePath();
-        ctx.fill();
-        console.log(x, y);
         timer += 0.2;
-        
+        ctx.fillText("x", x, y);
+        if (y <= 0) {
+          velocity = velocity * restitution;
+        }
+        if (velocity <= 0.01) {
+          x = 0;
+        }
+        ctx.fillText("x", x, y);
       }
       setInterval(draw, 100);
     </script>
